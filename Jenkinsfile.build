@@ -5,10 +5,10 @@ pipeline {
         stage('Build') {
             steps {
                 git 'https://github.com/RatonII/consul.git'
-                sh 'ls -la'
                 echo 'Building..'
-                sh 'whoami'
-                sh 'docker build -t image:test .'
+                sh 'docker build -t ratonii/consul:dev .'
+                sh 'docker login -u ratonii -p 'Gl4d1ator2@'
+                sh 'docker push ratonii/consul:dev'
                 cleanWs()
             }
         }
