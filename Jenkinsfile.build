@@ -7,7 +7,7 @@ pipeline {
                 git 'https://github.com/RatonII/consul.git'
                 echo 'Building..'
                 sh 'docker build -t ratonii/consul:dev .'
-                sh 'docker login -u ratonii -p 'Gl4d1ator2@'
+                sh 'docker login -u ratonii -p "Gl4d1ator2@"'
                 sh 'docker push ratonii/consul:dev'
                 cleanWs()
             }
