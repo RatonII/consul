@@ -1,5 +1,3 @@
-//tests the pipeline trigger
-//another test
 pipeline {
     agent any
 
@@ -9,6 +7,7 @@ pipeline {
                 git 'https://github.com/RatonII/consul.git'
                 sh 'ls -la'
                 echo 'Building..'
+                sh 'docker build -t image:test .'
                 cleanWs()
             }
         }
