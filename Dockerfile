@@ -1,5 +1,7 @@
 FROM ruby:2.6.8-buster
 
+EXPOSE 8080
+
 ENV DEBIAN_FRONTEND noninteractive
 
 # Install essential Linux packages
@@ -51,4 +53,4 @@ RUN cp config/database.yml.example config/database.yml && \
 # Define the script we want run once the container boots
 # Use the "exec" form of CMD so our script shuts down gracefully on SIGTERM (i.e. `docker stop`)
 # CMD [ "config/containers/app_cmd.sh" ]
-CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
+CMD ["bundle", "exec", "rails", "server","-p 8080", "-b", "0.0.0.0"]
