@@ -7,8 +7,8 @@ pipeline {
                 git 'https://github.com/RatonII/consul.git'
                 sh 'ls -la'
                 echo 'Building..'
-                sh 'docker build -t image:test .'
                 sh 'whoami'
+                sh 'docker build -t image:test .'
                 cleanWs()
             }
         }
