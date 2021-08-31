@@ -1,4 +1,4 @@
-FROM ruby:2.6.8-buster
+FROM ruby:2.6-slim-buster
 
 EXPOSE 8080
 
@@ -8,13 +8,13 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update -qq
 RUN apt-get install -y build-essential libpq-dev postgresql-client nodejs imagemagick sudo libxss1 libappindicator1 libindicator7 unzip memcached cmake pkg-config shared-mime-info
 
-# Files created inside the container repect the ownership
-RUN adduser --shell /bin/bash --disabled-password --gecos "" consul \
-  && adduser consul sudo \
-  && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+## Files created inside the container repect the ownership
+#RUN adduser --shell /bin/bash --disabled-password --gecos "" consul \
+#  && adduser consul sudo \
+#  && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
-RUN echo 'Defaults secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/bundle/bin"' > /etc/sudoers.d/secure_path
-RUN chmod 0440 /etc/sudoers.d/secure_path
+#RUN echo 'Defaults secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/bundle/bin"' > /etc/sudoers.d/secure_path
+#RUN chmod 0440 /etc/sudoers.d/secure_path
 
 COPY scripts/entrypoint.sh /usr/local/bin/entrypoint.sh
 
@@ -42,8 +42,8 @@ RUN gem install bundler
 # Finish establishing our Ruby environment
 RUN bundle install --full-index
 
-# Install Chromium for E2E integration tests
-RUN apt-get update -qq && apt-get install -y chromium
+## Install Chromium for E2E integration tests
+#RUN apt-get update -qq && apt-get install -y chromium
 
 # Copy the Rails application into place
 COPY . .
@@ -53,4 +53,4 @@ RUN cp config/database.yml.example config/database.yml && \
 # Define the script we want run once the container boots
 # Use the "exec" form of CMD so our script shuts down gracefully on SIGTERM (i.e. `docker stop`)
 # CMD [ "config/containers/app_cmd.sh" ]
-CMD ["bundle", "exec", "rails", "server","-p 8080", "-b", "0.0.0.0"]
+CMD ["bundle", "exec", "rails", "server", "-p", "8080", "-b", "0.0.0.0"]
