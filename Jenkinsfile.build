@@ -8,6 +8,7 @@ pipeline {
                 sh 'ls -la'
                 echo 'Building..'
                 sh 'docker build -t image:test .'
+                sh 'whoami'
                 cleanWs()
             }
         }
