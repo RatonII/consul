@@ -45,6 +45,8 @@ RUN apt-get update -qq && apt-get install -y chromium
 
 # Copy the Rails application into place
 COPY . .
+RUN cp config/database.yml.example config/database.yml && \
+    cp config/secrets.yml.example config/secrets.yml
 
 # Define the script we want run once the container boots
 # Use the "exec" form of CMD so our script shuts down gracefully on SIGTERM (i.e. `docker stop`)
