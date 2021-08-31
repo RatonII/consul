@@ -32,6 +32,8 @@ services:
     # expose the port we configured Unicorn to bind to
     ports:
       - "3000:3000"
+    network_mode:
+      - host
     # map our application source code, in full, to the application root of our container
     volumes:
       - .:/var/www/consul:delegated
