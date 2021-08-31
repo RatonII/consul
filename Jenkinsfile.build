@@ -1,13 +1,16 @@
 pipeline {
     agent any
-
+    environment {
+        DOCKER_USER     = credentials('docker-username')
+        DOCKER_PASSWORD = credentials('docker-password')
+    }
     stages {
         stage('Build') {
             steps {
                 git 'https://github.com/RatonII/consul.git'
                 echo 'Building..'
                 sh 'docker build -t ratonii/consul:dev .'
-                sh 'docker login -u ratonii -p "Gl4d1ator2@"'
+                sh 'docker login -u $DOCKER_USER -p $DOCKER_PASSWORD'
                 sh 'docker push ratonii/consul:dev'
                 cleanWs()
             }
