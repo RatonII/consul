@@ -7,8 +7,9 @@ pipeline {
         stage('Build') {
             steps {
                 git 'https://github.com/RatonII/consul.git'
-                ls -la
+                sh 'ls -la'
                 echo 'Building..'
+                cleanWs()
             }
         }
         stage('Test') {
