@@ -17,6 +17,7 @@ RUN apt-get install -y build-essential libpq-dev postgresql-client nodejs imagem
 #RUN chmod 0440 /etc/sudoers.d/secure_path
 
 COPY scripts/entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
 
 # Define where our application will live inside the image
 ENV RAILS_ROOT /var/www/consul
@@ -53,4 +54,5 @@ RUN cp config/database.yml.example config/database.yml && \
 # Define the script we want run once the container boots
 # Use the "exec" form of CMD so our script shuts down gracefully on SIGTERM (i.e. `docker stop`)
 # CMD [ "config/containers/app_cmd.sh" ]
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 CMD ["bundle", "exec", "rails", "server", "-p", "8080", "-b", "0.0.0.0"]
